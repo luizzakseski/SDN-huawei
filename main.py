@@ -1,91 +1,32 @@
 import paramiko
+import paramiko_expect
 from paramiko_expect import SSHClientInteraction
 from os import system
+import config
+import switch
 
 
-def vlan1() {
-system('cls')
-
-ip =
-usuario =
-senha =
-prompt =
-
-ssh = paramiko.SSHClient()
-ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect(ip, username=usuario, password=senha)
-
-
-commands = SSHClientInteraction(ssh, timeout=1, display=True)
-
-
-commands.expect(prompt)
-commands.send("N\n")
-
-commands.expect(prompt)
-commands.send("display mac-address vlan 1\n")
-
-commands.expect(prompt)
-
-commands.close()
-output = commands.current_output_clean
-
-print (output)
-
-}
-
-
-def lldp_enable(){
-    system('cls')
-
-
-    ip =
-    oltname =
-
-    usuario =
-    senha =
-
-    prompt = oltname + '>'
-
-    ssh = paramiko.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(ip, username=usuario, password=senha)
-
-    commands = SSHClientInteraction(ssh, timeout=1, display=True)
-
-    commands.send("\n")
-    commands.expect(prompt)
-
-    commands.send("en\n")
-    prompt = oltname + '#'
-    commands.expect(prompt)
-
-    commands.send("conf\n")
-    prompt = oltname + '(config)#'
-    commands.expect(prompt)
-
-# MA5608T
-# commands.send("lldp enable port 0/2\n\n")
-# commands.expect(prompt)
-
-# MA5800-x2
-# commands.send("lldp enable port 0/3\n\n")
-# commands.expect(prompt)
-
-# olt grande
-    commands.send("lldp enable port 0/8\n\n")
-    commands.expect(prompt)
-
-    commands.close()
-    output = commands.current_output_clean
-
+def vlan1():
+    comm.expect(switch.prompt)
+    comm.send("N\n")
+    comm.send("display mac-address vlan 1\n")
+    comm.expect(switch.prompt)
+    comm.close()
+    output = comm.current_output_clean
     print(output)
 
-}
-
-lldp_enable()
 
 
+login = config.login
+password = config.password
+ip = switch.ip
+print(ip)
+system('cls')
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+ssh.connect(ip, username=login, password=password)
+comm = SSHClientInteraction(ssh, timeout=1, display=True)
 
 
+vlan1()
 
