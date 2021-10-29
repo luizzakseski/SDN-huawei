@@ -1,3 +1,1 @@
-este é meu readme
-
-projeto vai ser desenvolvido aqui
+Projeto de automatização de switches huawei
