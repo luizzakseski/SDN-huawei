@@ -7,6 +7,8 @@ import switch
 
 def vlan1():
     # this function verify if the switch has mac address in vlan1 and then print the output
+    if(ip=='172.16.250.1'):
+        comm.send("N")
     comm.expect(prompt)
     comm.send("display mac-address vlan 1")
     comm.expect(prompt)
@@ -19,12 +21,13 @@ def vlan1():
 if __name__ == '__main__':
     login = config.login
     password = config.password
-    switchdata = switch.data
-    for ip, prompt in switchdata:
+    switch_data = switch.data
+    for ip, prompt in switch_data:
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(ip, username=login, password=password)
         comm = SSHClientInteraction(ssh, timeout=1, display=False)
+        # verify vlan1
         vlan1()
     else:
         print("loop finished")
