@@ -1,13 +1,12 @@
 import paramiko
 from paramiko_expect import SSHClientInteraction
-from os import system
 import config
 import switch
 
 
 def vlan1():
     # this function verify if the switch has mac address in vlan1 and then print the output
-    if(ip=='172.16.250.1'):
+    if ip == '172.16.250.1':
         comm.send("N")
     comm.expect(prompt)
     comm.send("display mac-address vlan 1")
