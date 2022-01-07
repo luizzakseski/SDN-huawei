@@ -4,6 +4,7 @@ switch.py
 __pycache__
 *.pyc
 *.pyo
+oltpass.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
