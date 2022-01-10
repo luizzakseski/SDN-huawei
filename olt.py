@@ -5,7 +5,6 @@ import oltpass
 
 def hostname():
     # this function change the hostname of the olt
-    prompt = "test"
     comm.expect(prompt)
     hostname = input("Digite o Hostename da olt")
     comm.send("sysname", hostname)
@@ -323,11 +322,12 @@ if __name__ == '__main__':
     testbasic = input("Configurar IP, DNS , SNMP e NTP?  y/n")
     if testbasic == "y":
         confbasic(comm, prompt)
-
-
     # configure hostname
-    # hostname()
-
+    testbasic = input("Configurar hostname? (fazer por ultimo)  y/n")
+    if testbasic == "y":
+        hostname(comm, prompt)
+    comm.close()
+    print("configuração finalizada")
 
 
 
