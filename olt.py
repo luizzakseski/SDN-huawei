@@ -213,6 +213,7 @@ def confbasic(comm,prompt):
         comm.send("quit\n\n")
         comm.expect(prompt)
         comm.send("ip route-static 0.0.0.0 0.0.0.0 ",mgmt_gw, "\n\n")
+    print("Ip e rota default configurados")
     dnstest = input("Digite y para configurar o DNS")
     if dnstest == 'y':
         dns1 = input("digite o servidor de dns primario")
@@ -224,7 +225,20 @@ def confbasic(comm,prompt):
         comm.expect(prompt)
         comm.send("dns server ",dns2,"\n\n")
         comm.expect(prompt)
-
+    print("DNS configurado")
+    snmptest = input("Digite y para configurar o SNMP")
+    if snmptest == 'y':
+        comm.expect(prompt)
+        snmp_community = input("Digite a community SNMP")
+        comm.send("snmp-agent community read ",snmp_community, "\n\n")
+        comm.expect(prompt)
+        snmp_loc = input("Digite a cidade e he do equipamento ex: TOO-he1")
+        comm.send("snmp-agent sys-info location ", snmp_loc,"\n\n")
+        comm.expect(prompt)
+        comm.send("snmp-agent sys-info version v2c\n\n")
+        comm.expect(prompt)
+    ntptest = input("Digite y para configurar o NTP")
+    if ntptest == 'y':
 
 
 if __name__ == '__main__':
