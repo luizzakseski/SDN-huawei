@@ -197,6 +197,36 @@ def confprofile(comm, prompt):
     return()
 
 
+def confbasic(comm,prompt):
+    mgmttest = input("Digite y para configurar o IP de gerencia")
+    if mgmttest == 'y':
+        mgmt_vlan = input("Digite a VLAN de mgmt")
+        mgmt_ip = input("digite o IP da olt")
+        mgmt_mask = input("Digite a mascara de rede")
+        mgmt_gw = input("Digite o Gateway")
+        comm.expect(prompt)
+        comm.send("interface vlanif ",mgmt_vlan)
+        promptif = ("MA5800-X2(config-if-vlanif", mgmt_vlan, ")#\n\n")
+        comm.expect(promptif)
+        comm.send("ip address ",mgmt_ip, " ", mgmt_mask, "\n\n")
+        comm.expect(promptif)
+        comm.send("quit\n\n")
+        comm.expect(prompt)
+        comm.send("ip route-static 0.0.0.0 0.0.0.0 ",mgmt_gw, "\n\n")
+    dnstest = input("Digite y para configurar o DNS")
+    if dnstest == 'y':
+        dns1 = input("digite o servidor de dns primario")
+        dns2 = input("digite o servidor de dns secundario")
+        comm.expect(prompt)
+        comm.send("dns resolve\n\n")
+        comm.expect(prompt)
+        comm.send("dns server ",dns1,"\n\n")
+        comm.expect(prompt)
+        comm.send("dns server ",dns2,"\n\n")
+        comm.expect(prompt)
+
+
+
 if __name__ == '__main__':
     print("Bem vindo ao configurador automatizado de OLTs da Certto, configure o ip 10.11.104.1/255.255.255.0 no seu pc")
     promptu = "MA5800-X2>"
@@ -225,7 +255,9 @@ if __name__ == '__main__':
     testprofile = input("Configurar profile de ftth?  y/n")
     if testprofile == "y":
         confprofile(comm, prompt)
-
+    testbasic = input("Configurar IP, DNS , SNMP e NTP?  y/n")
+    if testbasic == "y":
+        confbasic(comm, prompt)
 
 
     # configure hostname
